@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # Main Next.js application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: promptflow-video
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
+      - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+      - RUNWAY_API_KEY=${RUNWAY_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./videos:/app/videos  # For storing generated videos locally
+    networks:
+      - promptflow-network
+    restart: unless-stopped
+
+  # Optional: PostgreSQL database for storing video metadata
+  db:
+    image: postgres:15-alpine
+    container_name: promptflow-db
+    environment:
+      POSTGRES_DB: promptflow
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - promptflow-network
+    restart: unless-stopped
+    profiles:
+      - with-db  # Enable with: docker-compose --profile with-db up
+
+  # Optional: Redis for caching and job queue
+  redis:
+    image: redis:7-alpine
+    container_name: promptflow-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - promptflow-network
+    restart: unless-stopped
+    profiles:
+      - with-cache
+
+volumes:
+  db_data:
+
+networks:
+  promptflow-network:
+    driver: bridge
