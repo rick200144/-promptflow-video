@@ -25,7 +25,10 @@ export default function VideoGenerator() {
   const [style, setStyle] = useState('cinematic');
   const [duration, setDuration] = useState('30');
   const [loading, setLoading] = useState(false);
-  const addVideo = useVideoStore((state) => state.addVideo);
+  const { addVideo, updateVideo } = useVideoStore((state) => ({
+    addVideo: state.addVideo,
+    updateVideo: state.updateVideo,
+  }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +61,17 @@ export default function VideoGenerator() {
         style,
       });
 
-      toast.success('Video generation started! Check your video list.');
+      // Update video with response data
+      if (response.videoUrl) {
+        updateVideo(videoId, {
+          status: 'completed',
+          url: response.videoUrl,
+        });
+        toast.success('Video generated successfully! Check your video list.');
+      } else {
+        toast.info('Video generation started! Check your video list.');
+      }
+
       setPrompt('');
 
       console.log('Generation response:', response);

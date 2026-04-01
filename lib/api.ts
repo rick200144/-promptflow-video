@@ -19,6 +19,7 @@ export interface GenerateVideoResponse {
   id: string;
   status: string;
   message: string;
+  videoUrl?: string;
 }
 
 export const generateVideo = async (
