@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { generateVideo } from '../lib/api';
-import { useVideoStore, type Video } from '../lib/videoStore';
+import { useVideoStore, type Video, type VideoStore } from '../lib/videoStore';
 import styles from '../styles/VideoGenerator.module.css';
 
 const VIDEO_STYLES = [
@@ -25,7 +25,7 @@ export default function VideoGenerator() {
   const [style, setStyle] = useState('cinematic');
   const [duration, setDuration] = useState('30');
   const [loading, setLoading] = useState(false);
-  const { addVideo, updateVideo } = useVideoStore((state) => ({
+  const { addVideo, updateVideo } = useVideoStore((state: VideoStore) => ({
     addVideo: state.addVideo,
     updateVideo: state.updateVideo,
   }));

@@ -18,6 +18,8 @@ interface VideoStore {
   clearVideos: () => void;
 }
 
+export type { VideoStore };
+
 export const useVideoStore = create<VideoStore>((set) => ({
   videos: [],
   addVideo: (video) =>
