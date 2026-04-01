@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { generateVideo } from '../lib/api';
-import { useVideoStore, type Video, type VideoStore } from '../lib/videoStore';
-import styles from '../styles/VideoGenerator.module.css';
+import { generateVideo } from '@/lib/api';
+import { useVideoStore, type Video, type VideoStore } from '@/lib/videoStore';
+import styles from '@/styles/VideoGenerator.module.css';
 
 const VIDEO_STYLES = [
   { id: 'cinematic', label: 'Cinematic' },

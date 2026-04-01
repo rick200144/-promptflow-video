@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import Header from '../components/Header';
-import VideoGenerator from '../components/VideoGenerator';
-import VideoList from '../components/VideoList';
+import Header from '@/components/Header';
+import VideoGenerator from '@/components/VideoGenerator';
+import VideoList from '@/components/VideoList';
 
 export default function Home() {
   return (

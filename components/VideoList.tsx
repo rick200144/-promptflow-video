@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { useVideoStore } from '../lib/videoStore';
-import styles from '../styles/VideoList.module.css';
+import { useVideoStore } from '@/lib/videoStore';
+import styles from '@/styles/VideoList.module.css';
 
 export default function VideoList() {
   const { videos, removeVideo, updateVideo } = useVideoStore();
